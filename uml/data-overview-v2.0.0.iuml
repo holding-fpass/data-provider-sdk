@@ -1,0 +1,90 @@
+@startuml FPASS Data
+title FPASS Data forwarding Flow
+footer v2.0.0
+autonumber
+skinparam MaxMessageSize 100
+
+box FPASS #b43de750
+participant "API" as FpassAPI
+end box
+
+box Partner #2d7f6250
+participant "Plataforma" as PartnerApp
+participant "API" as PartnerAPI
+database "MongoDB" as PartnerDB
+database "Storage" as PartnerStorage
+end box
+
+group Data forwarding
+
+group Webhook Delivery
+FpassAPI -> PartnerAPI: POST
+note left
+**HTTP Method**
+POST {partnerUrl}/webhook
+
+**Authorization**
+x-api-key {uuid}
+
+**Payload**
+{
+  "eventId": "{eventId}",
+  "eventDate": "{isoDate}",
+  "eventType": "{eventType}",
+  "resourceId": "{uuid}",
+  "resourceType": "{resourceType}",
+  "parentId": "{parentId}",
+  "parentType": "{parentType}",
+  "ownerExternalId": "{ownerExternalId}",
+  "data": "{data}"
+}
+end note
+PartnerAPI -> FpassAPI: Response
+note left
+**Response**
+HTTP 200 | 201
+end note
+end
+
+group MongoDB Delivery
+FpassAPI -> PartnerDB: Collection insert
+note left
+**Object**
+{
+  "eventId": "{eventId}",
+  "eventDate": "{isoDate}",
+  "eventType": "{eventType}",
+  "resourceId": "{uuid}",
+  "resourceType": "{resourceType}",
+  "parentId": "{parentId}",
+  "parentType": "{parentType}",
+  "ownerExternalId": "{ownerExternalId}",
+  "data": "{data}"
+}
+end note
+PartnerDB -> FpassAPI: Success operation
+end
+
+group Google Cloud Storage Delivery
+FpassAPI -> PartnerStorage: Bucket file creation
+note left
+**Filename**
+{eventId}.json
+
+**Content**
+{
+  "eventId": "{eventId}",
+  "eventDate": "{isoDate}",
+  "eventType": "{eventType}",
+  "resourceId": "{uuid}",
+  "resourceType": "{resourceType}",
+  "parentId": "{parentId}",
+  "parentType": "{parentType}",
+  "ownerExternalId": "{ownerExternalId}",
+  "data": "{data}"
+}
+end note
+PartnerStorage -> FpassAPI: Success operation
+end
+
+@enduml
