@@ -71,7 +71,7 @@ curl --location -g --request POST 'https://api.{partner}.com/jwt' \
 
 Resposta esperada
 
-- Sucesso: 201 ou 201
+- Sucesso: 200 ou 201
 - Falha: demais
 
 ### MongoDB
