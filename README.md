@@ -28,6 +28,47 @@ Cada evento é criado mediante uma interação do usuário na plataforma _FPASS_
 }
 ```
 
+### Exemplo: user.interaction type view
+Evento de interação do usuário que assistiu o conteúdo de um curso referente ao início do video no segundo 50 e termino no segundo 60.
+
+```json
+{
+  "eventId": "ca542dca-3649-4ca4-8142-8f1761fa822f",
+  "eventDate": "2022-08-29T19:13:13.783Z",
+  "eventType": "user.interaction",
+  "resourceId": "cc070573-fc2e-4dd2-bacb-0ac7eac655db",
+  "resourceType": "interaction",
+  // Identificador externo enviado pelo partner
+  "ownerExternalId": "2e16f9d7-cb32-43fd-ade2-93a5ecea460a",
+  // Dados de classificação do usuário feita pelo partner
+  "ownerData": {
+    "tags": [
+      "NivelABC",
+      "GrupoXPTO",
+    ]
+  },
+  "data": {
+    // Dados do evento do tipo interaction
+    "ownerId": "5g16f9d7-cb32-43fd-ade2-93a5ecea467a",
+    "ownerWhitelabel": "company-xpto",
+    "resourceId": "cc070573-fc2e-4dd2-bacb-0ac7eac655db",
+    "resourceType": "interaction",
+    "type": "view",
+    "parentId": "8b46be82-d8f6-4b62-86cb-926f4865e9df",
+    "parentType": "course",
+    "productId": "jj070573-fc2e-4dd2-bacb-0ac7eac655ca",
+    "productType": "content",
+    "status": "created",
+    "timestamp": "2022-08-29T19:13:13.783Z",
+    "whitelabel": "company-xpto",
+    // Dados extras específicos do evento interaction tipo view
+    "mediaStart": 50,
+    "mediaEnd": 60,
+    "mediaCount": 60,
+  }
+}
+```
+
 ### Definições
 
 - eventId: Identificação única em formato UUIDv4
